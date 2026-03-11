@@ -262,7 +262,10 @@ def main():
     # Git push
     os.chdir(pulse_dir)
     subprocess.run(["git", "add", "."], check=True)
-    subprocess.run(["git", "commit", "-m", f"Pulse {today}"], check=True)
+    result = subprocess.run(["git", "commit", "-m", f"Pulse {today}"])
+    if result.returncode != 0:
+        print("Cards already live")
+        return
     subprocess.run(["git", "push"], check=True)
     print(f"✅ Pushed to GitHub — Vercel deploying now")
     print(f"🔗 https://pulse-ruddy-three.vercel.app")
