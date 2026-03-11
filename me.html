@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pulse — My View</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; }
+  body { font-family: 'Cormorant Garamond', serif; background: #0a0a0a; }
+  .yemi-section { min-height: 100vh; min-height: 100dvh; background: linear-gradient(160deg, #0d0d1a 0%, #0a0a0a 100%); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 52px 36px 48px; position: relative; overflow: hidden; text-align: center; }
+  .y-top-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #3a5fc8, #5a82ff, #3a5fc8, transparent); }
+  .y-center { width: 100%; display: flex; flex-direction: column; align-items: center; opacity: 0; animation: fadeUp 1.2s ease forwards; animation-delay: 0.3s; }
+  .y-tag { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 5px; color: #5a82ff; text-transform: uppercase; margin-bottom: 40px; opacity: 0.9; }
+  .y-deco { width: 32px; height: 1px; background: linear-gradient(90deg, transparent, #5a82ff, transparent); margin-bottom: 36px; }
+  .y-quote-mark { font-size: 80px; line-height: 0.6; color: #5a82ff; opacity: 0.25; margin-bottom: 12px; font-style: italic; }
+  .y-quote { font-size: 32px; font-weight: 300; font-style: italic; line-height: 1.6; color: #e8e8ff; letter-spacing: 0.3px; margin-bottom: 40px; }
+  .y-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, #5a82ff, transparent); margin-bottom: 20px; }
+  .y-attribution { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 3px; color: #5a82ff; opacity: 0.75; text-transform: uppercase; }
+  .y-bottom { display: flex; flex-direction: column; align-items: center; gap: 16px; opacity: 0; animation: fadeUp 0.8s ease forwards; animation-delay: 0.8s; }
+  .y-dot { width: 5px; height: 5px; border-radius: 50%; background: #5a82ff; opacity: 0.6; animation: glow 3s ease-in-out infinite; }
+  .y-date { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 300; letter-spacing: 3px; color: #e8e8ff; opacity: 0.2; text-transform: uppercase; }
+  .scroll-hint { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.2); animation: bounce 2s ease-in-out infinite; }
+  .section-divider { background: #0a0a0a; padding: 24px 36px; display: flex; align-items: center; gap: 16px; }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); }
+  .divider-label { font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: 4px; color: rgba(255,255,255,0.2); text-transform: uppercase; white-space: nowrap; }
+  .send-section { background: #0a0a0a; padding: 0 36px 24px; display: flex; justify-content: center; }
+  .send-btn { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: #c8922a; background: rgba(200,146,42,0.08); border: 1px solid rgba(200,146,42,0.3); border-radius: 2px; padding: 12px 28px; cursor: pointer; text-decoration: none; display: inline-block; }
+  .ideka-section { min-height: 100vh; min-height: 100dvh; background: linear-gradient(160deg, #2c1a00 0%, #1a0f00 100%); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 52px 36px 48px; position: relative; overflow: hidden; text-align: center; }
+  .ideka-section::before { content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(200,146,42,0.12) 0%, transparent 70%); top: -100px; right: -100px; pointer-events: none; }
+  .i-top-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c8922a, #e8b84b, #c8922a, transparent); }
+  .i-bottom-line { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,146,42,0.4), transparent); }
+  .i-center { width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .i-label { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 5px; color: #c8922a; text-transform: uppercase; margin-bottom: 40px; opacity: 0.9; }
+  .i-deco { width: 32px; height: 1px; background: linear-gradient(90deg, transparent, #e8b84b, transparent); margin-bottom: 36px; }
+  .i-quote-mark { font-size: 80px; line-height: 0.6; color: #c8922a; opacity: 0.35; margin-bottom: 12px; font-style: italic; }
+  .i-quote { font-size: 32px; font-weight: 300; font-style: italic; line-height: 1.6; color: #f5e6c8; letter-spacing: 0.3px; margin-bottom: 40px; }
+  .i-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, #c8922a, transparent); margin-bottom: 20px; }
+  .i-attribution { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 3px; color: #c8922a; opacity: 0.75; text-transform: uppercase; }
+  .i-bottom { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .i-dot { width: 5px; height: 5px; border-radius: 50%; background: #e8b84b; opacity: 0.6; animation: glow 3s ease-in-out infinite; }
+  .i-date { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 300; letter-spacing: 3px; color: #f5e6c8; opacity: 0.25; text-transform: uppercase; }
+  @keyframes glow { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+</style>
+</head>
+<body>
+<div class="yemi-section">
+  <div class="y-top-line"></div>
+  <div class="y-center">
+    <div class="y-tag">concern but moderate</div>
+    <div class="y-deco"></div>
+    <div class="y-quote-mark">"</div>
+    <p class="y-quote">Concern that knows its own name is already halfway to peace. You're more aware than you think.</p>
+    <div class="y-divider"></div>
+    <div class="y-attribution">for you today</div>
+  </div>
+  <div class="y-bottom">
+    <div class="y-dot"></div>
+    <div class="y-date">March 10 · 2026</div>
+  </div>
+  <div class="scroll-hint">↓ her card</div>
+</div>
+<div class="section-divider"><span class="divider-label">her card today</span></div>
+<div class="send-section">
+  <a class="send-btn" href="https://pulse-ruddy-three.vercel.app" target="_blank">↗ open to send</a>
+</div>
+<div class="ideka-section">
+  <div class="i-top-line"></div>
+  <div class="i-center">
+    <div class="i-label">for a honey kind of day</div>
+    <div class="i-deco"></div>
+    <div class="i-quote-mark">"</div>
+    <p class="i-quote">Some people colour your world without even trying.</p>
+    <div class="i-divider"></div>
+    <div class="i-attribution">for you today</div>
+  </div>
+  <div class="i-bottom">
+    <div class="i-dot"></div>
+    <div class="i-date">March 10 · 2026</div>
+  </div>
+  <div class="i-bottom-line"></div>
+</div>
+</body>
+</html>
