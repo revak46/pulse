@@ -1,0 +1,11 @@
+# Raw source image folders — not needed for deployment
+images/yemi/
+images/ideka/
+images/thumbs/
+images/pool/
+
+# Drafts folder
+drafts/
+
+# macOS
+.DS_Store
