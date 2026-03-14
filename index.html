@@ -16,7 +16,7 @@
         rgba(18,10,2,0.22) 28%,
         rgba(18,10,2,0.56) 62%,
         rgba(10,5,1,0.94) 100%),
-      url('images/i4_earrings.jpg') center / cover no-repeat;
+      url('images/i5_clutch_perfume.jpg') center / cover no-repeat;
     min-height: 100vh; min-height: 100dvh;
     display: flex; flex-direction: column;
     align-items: center; justify-content: space-between;
@@ -39,22 +39,215 @@
   @keyframes glow { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
   .date-chip { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 300; letter-spacing: 3px; color: #f5e6c8; opacity: 0.25; text-transform: uppercase; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── SHIMMER SWEEP ── */
+  .shimmer-stripe {
+    position: absolute; top: 0; left: 0;
+    width: 38%; height: 100%;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255,248,180,0.22) 28%,
+      rgba(255,255,240,0.44) 50%,
+      rgba(255,248,180,0.22) 72%,
+      transparent 100%
+    );
+    mix-blend-mode: overlay;
+    transform: translateX(-100%);
+    animation: shimmerSlide 2.6s cubic-bezier(0.4,0,0.2,1) 1.6s 1 forwards;
+    pointer-events: none;
+    z-index: 3;
+  }
+  @keyframes shimmerSlide {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(370%); }
+  }
+
+  /* ── AMBIENT PARTICLES ── */
+  #particles  { position: absolute; inset: 0; pointer-events: none; overflow: hidden;  z-index: 1; }
+  #wordglitter { position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 5; }
+  @keyframes particleDrift {
+    0%   { transform: translateY(0) scale(1);   opacity: 0; }
+    10%  { opacity: 1; }
+    85%  { opacity: 0.9; }
+    100% { transform: translateY(-100px) scale(0.15); opacity: 0; }
+  }
+  @keyframes particleSparkle {
+    0%, 100% { opacity: 0.1; transform: scale(0.6); }
+    50%       { opacity: 1;   transform: scale(1.6); }
+  }
+  .center { z-index: 2; position: relative; }
+  .bottom { z-index: 2; position: relative; }
+  .top-line, .bottom-line { z-index: 4; }
+
+  /* ── TEXT GLITTER — the words themselves shimmer ── */
+  .quote {
+    background: linear-gradient(90deg,
+      #c8922a  0%,
+      #f5e6c8 10%,
+      #fffbe6 18%,
+      #ffd700 25%,
+      #fff4b0 32%,
+      #f5e6c8 42%,
+      #e8b84b 52%,
+      #fffbe6 60%,
+      #ffd700 67%,
+      #fff4b0 74%,
+      #f5e6c8 84%,
+      #ffe08a 92%,
+      #c8922a 100%
+    );
+    background-size: 260% 100%;
+    background-position: 160% center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 12px rgba(232,184,75,0.45));
+    animation: textGlitter 5s linear 1.4s infinite;
+  }
+  @keyframes textGlitter {
+    0%   { background-position: 160% center; }
+    100% { background-position: -60% center; }
+  }
 </style>
 </head>
 <body>
+<div id="particles"></div>
+<div id="wordglitter"></div>
+<div class="shimmer-stripe"></div>
 <div class="top-line"></div>
 <div class="center">
-  <div class="label">for the quiet observers</div>
+  <div class="label">for a friday kind of thought</div>
   <div class="deco"></div>
   <div class="quote-mark">"</div>
-  <p class="quote">Rare is the person who listens not to respond, but to understand. You'll know them by how seen they make you feel.</p>
+  <p class="quote">Art is never finished, only abandoned — but conversation between the right people never truly ends.</p>
   <div class="divider"></div>
   <div class="attribution">for you today</div>
 </div>
 <div class="bottom">
   <div class="honey-dot"></div>
-  <div class="date-chip">March 13 · 2026</div>
+  <div class="date-chip">March 14 · 2026</div>
 </div>
 <div class="bottom-line"></div>
+<script>
+(function(){
+  var pc=document.getElementById('particles');
+
+  /* ── drifting particles — gold dust rising ── */
+  var driftCols=[
+    'rgba(255,210,50,0.95)',
+    'rgba(232,184,75,0.92)',
+    'rgba(255,235,120,0.88)',
+    'rgba(255,200,40,0.85)',
+    'rgba(248,220,90,0.80)'
+  ];
+  for(var i=0;i<26;i++){
+    var p=document.createElement('div');
+    var sz=(Math.random()*3+1.5).toFixed(2);
+    var glow=parseFloat(sz)*2.5;
+    var col=driftCols[Math.floor(Math.random()*driftCols.length)];
+    var glowCol=col.replace(/[\d.]+\)$/,'0.6)');
+    p.style.cssText=[
+      'position:absolute',
+      'width:'+sz+'px',
+      'height:'+sz+'px',
+      'left:'+(Math.random()*90+5).toFixed(1)+'%',
+      'top:'+(Math.random()*88+6).toFixed(1)+'%',
+      'background:'+col,
+      'border-radius:50%',
+      'box-shadow:0 0 '+glow+'px '+glow+'px '+glowCol,
+      'animation:particleDrift '+(Math.random()*8+6).toFixed(1)+'s ease-in-out '+(Math.random()*18).toFixed(1)+'s infinite',
+      'pointer-events:none'
+    ].join(';');
+    pc.appendChild(p);
+  }
+
+  /* ── stationary sparkles — pulse in place ── */
+  var sparkCols=[
+    'rgba(255,220,60,1)',
+    'rgba(255,245,160,1)',
+    'rgba(232,184,75,1)'
+  ];
+  for(var j=0;j<12;j++){
+    var s=document.createElement('div');
+    var ssz=(Math.random()*2+1.8).toFixed(2);
+    var sglow=parseFloat(ssz)*3;
+    var scol=sparkCols[Math.floor(Math.random()*sparkCols.length)];
+    s.style.cssText=[
+      'position:absolute',
+      'width:'+ssz+'px',
+      'height:'+ssz+'px',
+      'left:'+(Math.random()*90+5).toFixed(1)+'%',
+      'top:'+(Math.random()*88+6).toFixed(1)+'%',
+      'background:'+scol,
+      'border-radius:50%',
+      'box-shadow:0 0 '+sglow+'px '+sglow+'px rgba(255,200,50,0.7)',
+      'animation:particleSparkle '+(Math.random()*3+2).toFixed(1)+'s ease-in-out '+(Math.random()*6).toFixed(1)+'s infinite',
+      'pointer-events:none'
+    ].join(';');
+    pc.appendChild(s);
+  }
+})();
+
+/* ── word glitter — particles fall off the shimmer text ── */
+(function(){
+  var wg = document.getElementById('wordglitter');
+  var gc = [
+    'rgba(255,215,50,1)',
+    'rgba(255,235,120,0.97)',
+    'rgba(232,184,75,0.95)',
+    'rgba(255,255,160,0.92)',
+    'rgba(248,210,60,0.98)'
+  ];
+
+  function spawnFaller() {
+    var p  = document.createElement('div');
+    var W  = window.innerWidth;
+    var H  = window.innerHeight;
+    var sz = (Math.random() * 3.5 + 1.2).toFixed(1);
+    var gl = parseFloat(sz) * 2.8;
+    var col = gc[Math.floor(Math.random() * gc.length)];
+
+    /* originate from within the quote text band — ~32%–58% down the screen */
+    var sx = (0.10 + Math.random() * 0.80) * W;
+    var sy = (0.32 + Math.random() * 0.26) * H;
+
+    /* fall path — gravity down, slight horizontal wander, spin */
+    var fall  = Math.random() * 140 + 90;
+    var drift = (Math.random() - 0.5) * 80;
+    var rot   = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 360 + 180);
+    var dur   = Math.random() * 2000 + 2200;
+
+    /* shape — mix of dots and slight diamonds */
+    var radius = Math.random() > 0.35 ? '50%' : '30%';
+    var aspect = Math.random() > 0.35 ? sz : (parseFloat(sz) * 0.55).toFixed(1);
+
+    p.style.cssText = [
+      'position:absolute',
+      'width:'  + sz     + 'px',
+      'height:' + aspect + 'px',
+      'left:'   + sx.toFixed(0) + 'px',
+      'top:'    + sy.toFixed(0) + 'px',
+      'background:' + col,
+      'border-radius:' + radius,
+      'box-shadow:0 0 ' + gl + 'px ' + gl + 'px rgba(255,200,50,0.65)',
+      'pointer-events:none'
+    ].join(';');
+
+    wg.appendChild(p);
+
+    var anim = p.animate([
+      { transform: 'translateY(0px)   translateX(0px)    rotate(0deg)',   opacity: 1 },
+      { transform: 'translateY(' + fall + 'px) translateX(' + drift + 'px) rotate(' + rot + 'deg)', opacity: 0 }
+    ], { duration: dur, easing: 'ease-in', fill: 'forwards' });
+
+    anim.onfinish = function() { if (wg.contains(p)) wg.removeChild(p); };
+  }
+
+  /* burst when text appears (~1.4s in), then continuous trickle */
+  for (var k = 0; k < 12; k++) { setTimeout(spawnFaller, 1400 + k * 150); }
+  setInterval(spawnFaller, 500);
+})();
+</script>
 </body>
 </html>

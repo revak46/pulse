@@ -13,3 +13,11 @@ nothing to commit, working tree clean
 ℹ️  Nothing new to push — cards already live
 🔗 Your card:   https://pulse-ruddy-three.vercel.app/me
 🔗 Her card:    https://pulse-ruddy-three.vercel.app
+[main 1f514bd] Pulse 2026-03-13
+ 5 files changed, 195 insertions(+), 49 deletions(-)
+ create mode 100644 __pycache__/pulse_builder.cpython-310.pyc
+✅ Both cards built for 2026-03-13
+   Yemi bg: y4_dome.jpg  |  Ideka bg: i4_earrings.jpg
+✅ Pushed to GitHub
+🔗 Your card:   https://pulse-ruddy-three.vercel.app/me
+🔗 Her card:    https://pulse-ruddy-three.vercel.app
