@@ -79,7 +79,7 @@
   .bottom { z-index: 2; position: relative; }
   .top-line, .bottom-line { z-index: 4; }
 
-  /* ── TEXT GLITTER — the words themselves shimmer ── */
+  /* ── TEXT GLITTER ── */
   .quote {
     background: linear-gradient(90deg,
       #c8922a  0%,
@@ -132,121 +132,50 @@
 <script>
 (function(){
   var pc=document.getElementById('particles');
-
-  /* ── drifting particles — gold dust rising ── */
-  var driftCols=[
-    'rgba(255,210,50,0.95)',
-    'rgba(232,184,75,0.92)',
-    'rgba(255,235,120,0.88)',
-    'rgba(255,200,40,0.85)',
-    'rgba(248,220,90,0.80)'
-  ];
+  var driftCols=['rgba(255,210,50,0.95)','rgba(232,184,75,0.92)','rgba(255,235,120,0.88)','rgba(255,200,40,0.85)','rgba(248,220,90,0.80)'];
   for(var i=0;i<26;i++){
     var p=document.createElement('div');
     var sz=(Math.random()*3+1.5).toFixed(2);
     var glow=parseFloat(sz)*2.5;
     var col=driftCols[Math.floor(Math.random()*driftCols.length)];
     var glowCol=col.replace(/[\d.]+\)$/,'0.6)');
-    p.style.cssText=[
-      'position:absolute',
-      'width:'+sz+'px',
-      'height:'+sz+'px',
-      'left:'+(Math.random()*90+5).toFixed(1)+'%',
-      'top:'+(Math.random()*88+6).toFixed(1)+'%',
-      'background:'+col,
-      'border-radius:50%',
-      'box-shadow:0 0 '+glow+'px '+glow+'px '+glowCol,
-      'animation:particleDrift '+(Math.random()*8+6).toFixed(1)+'s ease-in-out '+(Math.random()*18).toFixed(1)+'s infinite',
-      'pointer-events:none'
-    ].join(';');
+    p.style.cssText=['position:absolute','width:'+sz+'px','height:'+sz+'px','left:'+(Math.random()*90+5).toFixed(1)+'%','top:'+(Math.random()*88+6).toFixed(1)+'%','background:'+col,'border-radius:50%','box-shadow:0 0 '+glow+'px '+glow+'px '+glowCol,'animation:particleDrift '+(Math.random()*8+6).toFixed(1)+'s ease-in-out '+(Math.random()*18).toFixed(1)+'s infinite','pointer-events:none'].join(';');
     pc.appendChild(p);
   }
-
-  /* ── stationary sparkles — pulse in place ── */
-  var sparkCols=[
-    'rgba(255,220,60,1)',
-    'rgba(255,245,160,1)',
-    'rgba(232,184,75,1)'
-  ];
+  var sparkCols=['rgba(255,220,60,1)','rgba(255,245,160,1)','rgba(232,184,75,1)'];
   for(var j=0;j<12;j++){
     var s=document.createElement('div');
     var ssz=(Math.random()*2+1.8).toFixed(2);
     var sglow=parseFloat(ssz)*3;
     var scol=sparkCols[Math.floor(Math.random()*sparkCols.length)];
-    s.style.cssText=[
-      'position:absolute',
-      'width:'+ssz+'px',
-      'height:'+ssz+'px',
-      'left:'+(Math.random()*90+5).toFixed(1)+'%',
-      'top:'+(Math.random()*88+6).toFixed(1)+'%',
-      'background:'+scol,
-      'border-radius:50%',
-      'box-shadow:0 0 '+sglow+'px '+sglow+'px rgba(255,200,50,0.7)',
-      'animation:particleSparkle '+(Math.random()*3+2).toFixed(1)+'s ease-in-out '+(Math.random()*6).toFixed(1)+'s infinite',
-      'pointer-events:none'
-    ].join(';');
+    s.style.cssText=['position:absolute','width:'+ssz+'px','height:'+ssz+'px','left:'+(Math.random()*90+5).toFixed(1)+'%','top:'+(Math.random()*88+6).toFixed(1)+'%','background:'+scol,'border-radius:50%','box-shadow:0 0 '+sglow+'px '+sglow+'px rgba(255,200,50,0.7)','animation:particleSparkle '+(Math.random()*3+2).toFixed(1)+'s ease-in-out '+(Math.random()*6).toFixed(1)+'s infinite','pointer-events:none'].join(';');
     pc.appendChild(s);
   }
 })();
-
-/* ── word glitter — particles fall off the shimmer text ── */
 (function(){
-  var wg = document.getElementById('wordglitter');
-  var gc = [
-    'rgba(255,215,50,1)',
-    'rgba(255,235,120,0.97)',
-    'rgba(232,184,75,0.95)',
-    'rgba(255,255,160,0.92)',
-    'rgba(248,210,60,0.98)'
-  ];
-
-  function spawnFaller() {
-    var p  = document.createElement('div');
-    var W  = window.innerWidth;
-    var H  = window.innerHeight;
-    var sz = (Math.random() * 3.5 + 1.2).toFixed(1);
-    var gl = parseFloat(sz) * 2.8;
-    var col = gc[Math.floor(Math.random() * gc.length)];
-
-    /* originate from within the quote text band — ~32%–58% down the screen */
-    var sx = (0.10 + Math.random() * 0.80) * W;
-    var sy = (0.32 + Math.random() * 0.26) * H;
-
-    /* fall path — gravity down, slight horizontal wander, spin */
-    var fall  = Math.random() * 140 + 90;
-    var drift = (Math.random() - 0.5) * 80;
-    var rot   = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 360 + 180);
-    var dur   = Math.random() * 2000 + 2200;
-
-    /* shape — mix of dots and slight diamonds */
-    var radius = Math.random() > 0.35 ? '50%' : '30%';
-    var aspect = Math.random() > 0.35 ? sz : (parseFloat(sz) * 0.55).toFixed(1);
-
-    p.style.cssText = [
-      'position:absolute',
-      'width:'  + sz     + 'px',
-      'height:' + aspect + 'px',
-      'left:'   + sx.toFixed(0) + 'px',
-      'top:'    + sy.toFixed(0) + 'px',
-      'background:' + col,
-      'border-radius:' + radius,
-      'box-shadow:0 0 ' + gl + 'px ' + gl + 'px rgba(255,200,50,0.65)',
-      'pointer-events:none'
-    ].join(';');
-
+  var wg=document.getElementById('wordglitter');
+  var gc=['rgba(255,215,50,1)','rgba(255,235,120,0.97)','rgba(232,184,75,0.95)','rgba(255,255,160,0.92)','rgba(248,210,60,0.98)'];
+  function spawnFaller(){
+    var p=document.createElement('div');
+    var W=window.innerWidth,H=window.innerHeight;
+    var sz=(Math.random()*3.5+1.2).toFixed(1);
+    var gl=parseFloat(sz)*2.8;
+    var col=gc[Math.floor(Math.random()*gc.length)];
+    var sx=(0.10+Math.random()*0.80)*W;
+    var sy=(0.32+Math.random()*0.26)*H;
+    var fall=Math.random()*140+90;
+    var drift=(Math.random()-0.5)*80;
+    var rot=(Math.random()>0.5?1:-1)*(Math.random()*360+180);
+    var dur=Math.random()*2000+2200;
+    var radius=Math.random()>0.35?'50%':'30%';
+    var aspect=Math.random()>0.35?sz:(parseFloat(sz)*0.55).toFixed(1);
+    p.style.cssText=['position:absolute','width:'+sz+'px','height:'+aspect+'px','left:'+sx.toFixed(0)+'px','top:'+sy.toFixed(0)+'px','background:'+col,'border-radius:'+radius,'box-shadow:0 0 '+gl+'px '+gl+'px rgba(255,200,50,0.65)','pointer-events:none'].join(';');
     wg.appendChild(p);
-
-    var anim = p.animate([
-      { transform: 'translateY(0px)   translateX(0px)    rotate(0deg)',   opacity: 1 },
-      { transform: 'translateY(' + fall + 'px) translateX(' + drift + 'px) rotate(' + rot + 'deg)', opacity: 0 }
-    ], { duration: dur, easing: 'ease-in', fill: 'forwards' });
-
-    anim.onfinish = function() { if (wg.contains(p)) wg.removeChild(p); };
+    var anim=p.animate([{transform:'translateY(0px) translateX(0px) rotate(0deg)',opacity:1},{transform:'translateY('+fall+'px) translateX('+drift+'px) rotate('+rot+'deg)',opacity:0}],{duration:dur,easing:'ease-in',fill:'forwards'});
+    anim.onfinish=function(){if(wg.contains(p))wg.removeChild(p);};
   }
-
-  /* burst when text appears (~1.4s in), then continuous trickle */
-  for (var k = 0; k < 12; k++) { setTimeout(spawnFaller, 1400 + k * 150); }
-  setInterval(spawnFaller, 500);
+  for(var k=0;k<12;k++){setTimeout(spawnFaller,1400+k*150);}
+  setInterval(spawnFaller,500);
 })();
 </script>
 </body>
