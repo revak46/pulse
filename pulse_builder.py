@@ -49,6 +49,16 @@ IDEKA_CARDS = {
 }
 
 # ============================================================
+# IDEKA — per-day background images (falls back to default)
+# ============================================================
+
+IDEKA_IMAGES = {
+    "2026-03-15": "i1_table_setting.jpg",
+}
+DEFAULT_IDEKA_IMAGE = "i5_clutch_perfume.jpg"
+
+
+# ============================================================
 # YEMI'S CARDS
 # ============================================================
 
@@ -89,7 +99,7 @@ YEMI_CARDS = {
 # IDEKA HTML — warm honey design
 # ============================================================
 
-def build_ideka_html(label, quote, attribution, date_str):
+def build_ideka_html(label, quote, attribution, date_str, image="i5_clutch_perfume.jpg"):
     d = date.fromisoformat(date_str)
     months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
     pretty_date = f"{months[d.month-1]} {d.day} · {d.year}"
@@ -111,7 +121,7 @@ def build_ideka_html(label, quote, attribution, date_str):
         rgba(18,10,2,0.22) 28%,
         rgba(18,10,2,0.56) 62%,
         rgba(10,5,1,0.94) 100%),
-      url('images/i5_clutch_perfume.jpg') center / cover no-repeat;
+      url('images/{image}') center / cover no-repeat;
     min-height: 100vh; min-height: 100dvh;
     display: flex; flex-direction: column;
     align-items: center; justify-content: space-between;
@@ -280,7 +290,7 @@ def build_ideka_html(label, quote, attribution, date_str):
 # YEMI DASHBOARD HTML — his card (dark bold) + Ideka's below
 # ============================================================
 
-def build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribution, date_str):
+def build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribution, date_str, i_image="i5_clutch_perfume.jpg"):
     d = date.fromisoformat(date_str)
     months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
     pretty_date = f"{months[d.month-1]} {d.day} · {d.year}"
@@ -357,24 +367,45 @@ def build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribu
   }}
   .send-btn:active {{ background: rgba(200,146,42,0.2); }}
 
-  /* ── IDEKA SECTION — warm honey ── */
+  /* ── IDEKA SECTION — warm honey + glitter ── */
   .ideka-section {{
     min-height: 100vh; min-height: 100dvh;
-    background: linear-gradient(160deg, #2c1a00 0%, #1a0f00 100%);
+    background:
+      linear-gradient(180deg,
+        rgba(28,14,4,0.54) 0%,
+        rgba(18,10,2,0.22) 28%,
+        rgba(18,10,2,0.56) 62%,
+        rgba(10,5,1,0.94) 100%),
+      url('images/{i_image}') center / cover no-repeat;
     display: flex; flex-direction: column;
     align-items: center; justify-content: space-between;
     padding: 52px 36px 48px;
     position: relative; overflow: hidden; text-align: center;
   }}
-  .ideka-section::before {{ content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(200,146,42,0.12) 0%, transparent 70%); top: -100px; right: -100px; pointer-events: none; }}
-  .ideka-section::after {{ content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(232,184,75,0.08) 0%, transparent 70%); bottom: -80px; left: -60px; pointer-events: none; }}
+  .ideka-section::before {{ content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(200,146,42,0.10) 0%, transparent 70%); top: -100px; right: -100px; pointer-events: none; }}
+  .ideka-section::after {{ content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(232,184,75,0.07) 0%, transparent 70%); bottom: -80px; left: -60px; pointer-events: none; }}
   .i-top-line {{ position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c8922a, #e8b84b, #c8922a, transparent); }}
   .i-bottom-line {{ position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,146,42,0.4), transparent); }}
   .i-center {{ width: 100%; display: flex; flex-direction: column; align-items: center; }}
   .i-label {{ font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: 5px; color: #c8922a; text-transform: uppercase; margin-bottom: 40px; opacity: 0.9; }}
   .i-deco {{ width: 32px; height: 1px; background: linear-gradient(90deg, transparent, #e8b84b, transparent); margin-bottom: 36px; }}
   .i-quote-mark {{ font-size: 80px; line-height: 0.6; color: #c8922a; opacity: 0.35; margin-bottom: 12px; font-style: italic; }}
-  .i-quote {{ font-size: 32px; font-weight: 300; font-style: italic; line-height: 1.6; color: #f5e6c8; letter-spacing: 0.3px; margin-bottom: 40px; }}
+  .i-quote {{
+    font-size: 32px; font-weight: 300; font-style: italic; line-height: 1.6; letter-spacing: 0.3px; margin-bottom: 40px;
+    background: linear-gradient(90deg,
+      #c8922a  0%, #f5e6c8 10%, #fffbe6 18%, #ffd700 25%,
+      #fff4b0 32%, #f5e6c8 42%, #e8b84b 52%, #fffbe6 60%,
+      #ffd700 67%, #fff4b0 74%, #f5e6c8 84%, #ffe08a 92%, #c8922a 100%
+    );
+    background-size: 260% 100%;
+    background-position: 160% center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 12px rgba(232,184,75,0.45));
+    animation: iTextGlitter 5s linear 1.4s infinite;
+  }}
   .i-divider {{ width: 48px; height: 1px; background: linear-gradient(90deg, transparent, #c8922a, transparent); margin-bottom: 20px; }}
   .i-attribution {{ font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 3px; color: #c8922a; opacity: 0.75; text-transform: uppercase; }}
   .i-bottom {{ display: flex; flex-direction: column; align-items: center; gap: 16px; }}
@@ -393,6 +424,48 @@ def build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribu
 
   @keyframes glow {{ 0%, 100% {{ opacity: 0.6; transform: scale(1); }} 50% {{ opacity: 1; transform: scale(1.5); }} }}
   @keyframes fadeUp {{ from {{ opacity: 0; transform: translateY(20px); }} to {{ opacity: 1; transform: translateY(0); }} }}
+
+  /* ── IDEKA SECTION SHIMMER & PARTICLES ── */
+  .i-shimmer-stripe {{
+    position: absolute; top: 0; left: 0;
+    width: 38%; height: 100%;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255,248,180,0.22) 28%,
+      rgba(255,255,240,0.44) 50%,
+      rgba(255,248,180,0.22) 72%,
+      transparent 100%
+    );
+    mix-blend-mode: overlay;
+    transform: translateX(-100%);
+    animation: shimmerSlide 2.6s cubic-bezier(0.4,0,0.2,1) 1.6s 1 forwards;
+    pointer-events: none;
+    z-index: 3;
+  }}
+  @keyframes shimmerSlide {{
+    0%   {{ transform: translateX(-100%); }}
+    100% {{ transform: translateX(370%); }}
+  }}
+  #i-particles  {{ position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }}
+  #i-wordglitter {{ position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 5; }}
+  .i-center {{ z-index: 2; position: relative; }}
+  .i-bottom {{ z-index: 2; position: relative; }}
+  .i-top-line {{ z-index: 4; position: relative; }}
+  .i-bottom-line {{ z-index: 4; position: relative; }}
+  @keyframes iParticleDrift {{
+    0%   {{ transform: translateY(0) scale(1);   opacity: 0; }}
+    10%  {{ opacity: 1; }}
+    85%  {{ opacity: 0.9; }}
+    100% {{ transform: translateY(-100px) scale(0.15); opacity: 0; }}
+  }}
+  @keyframes iParticleSparkle {{
+    0%, 100% {{ opacity: 0.1; transform: scale(0.6); }}
+    50%       {{ opacity: 1;   transform: scale(1.6); }}
+  }}
+  @keyframes iTextGlitter {{
+    0%   {{ background-position: 160% center; }}
+    100% {{ background-position: -60% center; }}
+  }}
 </style>
 </head>
 <body>
@@ -425,6 +498,9 @@ def build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribu
 
 <!-- IDEKA'S CARD PREVIEW -->
 <div class="ideka-section">
+  <div id="i-particles"></div>
+  <div id="i-wordglitter"></div>
+  <div class="i-shimmer-stripe"></div>
   <div class="i-top-line"></div>
   <div class="i-center">
     <div class="i-label">{i_label}</div>
@@ -441,6 +517,54 @@ def build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribu
   <div class="i-bottom-line"></div>
 </div>
 
+<script>
+(function(){{
+  var ipc=document.getElementById('i-particles');
+  var driftCols=['rgba(255,210,50,0.95)','rgba(232,184,75,0.92)','rgba(255,235,120,0.88)','rgba(255,200,40,0.85)','rgba(248,220,90,0.80)'];
+  for(var i=0;i<26;i++){{
+    var p=document.createElement('div');
+    var sz=(Math.random()*3+1.5).toFixed(2);
+    var glow=parseFloat(sz)*2.5;
+    var col=driftCols[Math.floor(Math.random()*driftCols.length)];
+    var glowCol=col.replace(/[\d.]+\)$/,'0.6)');
+    p.style.cssText=['position:absolute','width:'+sz+'px','height:'+sz+'px','left:'+(Math.random()*90+5).toFixed(1)+'%','top:'+(Math.random()*88+6).toFixed(1)+'%','background:'+col,'border-radius:50%','box-shadow:0 0 '+glow+'px '+glow+'px '+glowCol,'animation:iParticleDrift '+(Math.random()*8+6).toFixed(1)+'s ease-in-out '+(Math.random()*18).toFixed(1)+'s infinite','pointer-events:none'].join(';');
+    ipc.appendChild(p);
+  }}
+  var sparkCols=['rgba(255,220,60,1)','rgba(255,245,160,1)','rgba(232,184,75,1)'];
+  for(var j=0;j<12;j++){{
+    var s=document.createElement('div');
+    var ssz=(Math.random()*2+1.8).toFixed(2);
+    var sglow=parseFloat(ssz)*3;
+    var scol=sparkCols[Math.floor(Math.random()*sparkCols.length)];
+    s.style.cssText=['position:absolute','width:'+ssz+'px','height:'+ssz+'px','left:'+(Math.random()*90+5).toFixed(1)+'%','top:'+(Math.random()*88+6).toFixed(1)+'%','background:'+scol,'border-radius:50%','box-shadow:0 0 '+sglow+'px '+sglow+'px rgba(255,200,50,0.7)','animation:iParticleSparkle '+(Math.random()*3+2).toFixed(1)+'s ease-in-out '+(Math.random()*6).toFixed(1)+'s infinite','pointer-events:none'].join(';');
+    ipc.appendChild(s);
+  }}
+}})();
+(function(){{
+  var iwg=document.getElementById('i-wordglitter');
+  var gc=['rgba(255,215,50,1)','rgba(255,235,120,0.97)','rgba(232,184,75,0.95)','rgba(255,255,160,0.92)','rgba(248,210,60,0.98)'];
+  function spawnIFaller(){{
+    var p=document.createElement('div');
+    var sz=(Math.random()*3.5+1.2).toFixed(1);
+    var gl=parseFloat(sz)*2.8;
+    var col=gc[Math.floor(Math.random()*gc.length)];
+    var sx=(10+Math.random()*80).toFixed(1)+'%';
+    var sy=(32+Math.random()*26).toFixed(1)+'%';
+    var fall=Math.random()*140+90;
+    var drift=(Math.random()-0.5)*80;
+    var rot=(Math.random()>0.5?1:-1)*(Math.random()*360+180);
+    var dur=Math.random()*2000+2200;
+    var radius=Math.random()>0.35?'50%':'30%';
+    var aspect=Math.random()>0.35?sz:(parseFloat(sz)*0.55).toFixed(1);
+    p.style.cssText=['position:absolute','width:'+sz+'px','height:'+aspect+'px','left:'+sx,'top:'+sy,'background:'+col,'border-radius:'+radius,'box-shadow:0 0 '+gl+'px '+gl+'px rgba(255,200,50,0.65)','pointer-events:none'].join(';');
+    iwg.appendChild(p);
+    var anim=p.animate([{{transform:'translateY(0px) translateX(0px) rotate(0deg)',opacity:1}},{{transform:'translateY('+fall+'px) translateX('+drift+'px) rotate('+rot+'deg)',opacity:0}}],{{duration:dur,easing:'ease-in',fill:'forwards'}});
+    anim.onfinish=function(){{if(iwg.contains(p))iwg.removeChild(p);}};
+  }}
+  for(var k=0;k<12;k++){{setTimeout(spawnIFaller,1400+k*150);}}
+  setInterval(spawnIFaller,500);
+}})();
+</script>
 </body>
 </html>"""
 
@@ -458,14 +582,15 @@ def main():
 
     i_label, i_quote, i_attribution = IDEKA_CARDS[today]
     y_label, y_quote, y_attribution = YEMI_CARDS[today]
+    today_image = IDEKA_IMAGES.get(today, DEFAULT_IDEKA_IMAGE)
 
     # Build Ideka's page
-    ideka_html = build_ideka_html(i_label, i_quote, i_attribution, today)
+    ideka_html = build_ideka_html(i_label, i_quote, i_attribution, today, today_image)
     with open(os.path.join(pulse_dir, "index.html"), "w") as f:
         f.write(ideka_html)
 
     # Build Yemi's dashboard
-    yemi_html = build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribution, today)
+    yemi_html = build_yemi_html(y_label, y_quote, y_attribution, i_label, i_quote, i_attribution, today, today_image)
     with open(os.path.join(pulse_dir, "me.html"), "w") as f:
         f.write(yemi_html)
 
